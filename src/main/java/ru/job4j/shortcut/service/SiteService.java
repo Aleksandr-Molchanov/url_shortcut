@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.job4j.shortcut.model.Site;
 import ru.job4j.shortcut.repository.SiteRepository;
 
+import java.security.SecureRandom;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,6 +36,17 @@ public class SiteService {
 
     public Optional<Site> findByDomain(String domain) {
         return repository.findByDomain(domain);
+    }
+
+    public String generatePassword() {
+        String symbols = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        int passwordLength = 7;
+        SecureRandom rnd = new SecureRandom();
+        StringBuilder password = new StringBuilder(passwordLength);
+        for (int i = 0; i < passwordLength; i++) {
+            password.append(symbols.charAt(rnd.nextInt(symbols.length())));
+        }
+        return password.toString();
     }
 
 }
